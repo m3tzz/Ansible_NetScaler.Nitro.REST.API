@@ -1,0 +1,9 @@
+---
+  - name: PLAY 1 - DEPLOY CONFIGURATION
+    hosts: "{{ ci_name }}"
+    connection: local
+    gather_facts: False
+
+    roles:
+      - { role: add_vip_env1, tags: add_vip_env1 }
+      - { role: rm_vip_env1, tags: rm_vip_env1 }

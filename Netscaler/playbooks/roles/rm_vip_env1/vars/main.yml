@@ -1,0 +1,104 @@
+---
+
+servers:
+  - name: "dc1-server1"
+    ip_address: "192.168.1.1"
+    state: 'absent'
+
+service_groups:
+  - name: "svcgrp-intranet-http"
+    service_type: "HTTP"
+    state: 'absent'
+
+cs_vservers:
+  - name: "cs-80-intranet"
+    ip_address: "192.168.2.1"
+    port: 80
+    service_type: "HTTP"
+    state: 'absent'
+  - name: "cs-443-intranet"
+    ip_address: "192.168.2.1"
+    port: 443
+    service_type: "SSL"
+    state: 'absent'
+
+lb_vservers:
+  - name: "lb-80-intranet"
+    ip_address: "0.0.0.0"
+    #port: 443
+    service_type: "HTTP"
+    lb_method: "LEASTCONNECTION"
+    state: 'absent'
+    #persistence: "SRCIPDESTIP"
+    #conn_failover: "STATEFUL"
+    #comment: "Intranet HTTPS VIP"
+
+monitors:
+  - name: "lb-mon-https"
+    type: "HTTP"
+    request: "HEAD /healthcheck.html"
+    secure: "YES"
+    response_code: "200-202"
+    state: 'absent'
+
+
+bindings:
+  servicegroup_to_servers:
+    - servicegroup_name: "svcgrp-intranet-http"
+      server_name: "dc1-server1"
+      port: 8080
+      state: 'absent'
+
+  lbvserver_to_servicegroup:
+    - vserver_name: "lb-80-intranet"
+      servicegroup_name: "svcgrp-intranet-http"
+      state: 'absent'
+
+  lbvserver_to_csvserver:
+    - name: "cs-80-intranet"
+      lbvserver: "lb-80-intranet"
+      state: 'absent'
+    - name: "cs-443-intranet"
+      lbvserver: "lb-80-intranet"
+      state: 'absent'
+
+  sslcertkey_to_vservername:
+    - certkeyname: "certkey-name-example.com"
+      vservername: "cs-443-intranet"
+      state: 'absent'
+
+  sslciphersuite_to_vservername:
+    - vservername: "cs-443-intranet"
+      ciphername: "DEFAULT"
+      state: 'absent'
+    - vservername: "cs-443-intranet"
+      ciphername: "standard_cipher"
+      state: 'absent'
+
+  responderpolicies_to_csvserver:
+    - name: "cs-80-intranet"
+      policyname: "rp-pol-HTTPtoHTTPS"
+      priority: 5
+      gotopriorityexpression: "END"
+      state: 'absent'
+
+  rewritepolicies_to_csvserver:
+    - name: "cs-443-intranet"
+      policyname: "rw-pol-insertxff"
+      priority: 5
+      gotopriorityexpression: "NEXT"
+      bindpoint: "RESPONSE"
+      state: 'absent'
+
+  servicegroup_to_monitors:
+    - servicegroup_name: "svcgrp-intranet-http"
+      monitor_name: "lb-mon-https"
+      state: 'absent'
+
+ssl_vservers:
+  - vservername: "cs-443-intranet"
+    ssl3: "DISABLED"
+    tls1: "DISABLED"
+    #tls11: "ENABLED"
+    #tls12: "ENABLED"
+    state: 'absent'
