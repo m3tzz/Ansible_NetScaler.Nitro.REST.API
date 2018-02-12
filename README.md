@@ -23,4 +23,4 @@ ansible-playbook -i inventories/ playbooks/play.yml -t rm_vip_env1 -e ci_name=dc
 
 
 
-References -->https://github.com/networktocode/netscaler-ansible
+Reference to build this code -->https://github.com/networktocode/netscaler-ansible
