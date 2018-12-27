@@ -2,7 +2,7 @@
 Once you have located your search path; browse to that directory and clone the netscaler-ansible repo:
 
 cd /home/projects/
-git clone git@github.com:m3tzz/Ansible-Citrix-Netscaler.git
+git clone git@github.com:m3tzz/Ansible_NetScaler.Nitro.REST.API.git
 
 
 ########### Install Dependencies ###########
@@ -24,5 +24,7 @@ ansible-playbook -i inventories/ playbooks/play.yml -t rm_vip_env1 -e ci_name=dc
 
 
 Reference to build this code:
+
 -->https://developer-docs.citrix.com/projects/netscaler-nitro-api/en/11.1/#netscaler-111-nitro-rest-api-reference
+
 -->https://github.com/networktocode/netscaler-ansible
