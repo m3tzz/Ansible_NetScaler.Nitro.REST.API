@@ -23,4 +23,6 @@ ansible-playbook -i inventories/ playbooks/play.yml -t rm_vip_env1 -e ci_name=dc
 
 
 
-Reference to build this code -->https://github.com/networktocode/netscaler-ansible
+Reference to build this code:
+-->https://developer-docs.citrix.com/projects/netscaler-nitro-api/en/11.1/#netscaler-111-nitro-rest-api-reference
+-->https://github.com/networktocode/netscaler-ansible
