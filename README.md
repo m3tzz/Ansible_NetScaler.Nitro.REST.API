@@ -2,7 +2,7 @@
 Once you have located your search path; browse to that directory and clone the netscaler-ansible repo:
 
 cd /home/projects/
-git clone git@github.com:m3tzz/NetScaler-NITRO-API.git
+git clone git@github.com:m3tzz/Ansible-Citrix-Netscaler.git
 
 
 ########### Install Dependencies ###########
